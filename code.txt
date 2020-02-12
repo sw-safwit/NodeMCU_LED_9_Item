@@ -1,0 +1,318 @@
+#define BLYNK_PRINT Serial
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+
+//เชื่อมต่อ Blynk และ Wifi
+char auth[] = "CUdH3Macu0JCLa0ureMNIg_zDW06_y0B";
+char ssid[] = "SB_Home";
+char pass[] = "828633105";
+
+int column[9] = {D0, D1, D2, D3, D4, D5, D6, D7, D8};
+int t1 = 50;
+
+void setup()
+{
+  Serial.begin(9600);
+  Blynk.begin(auth, ssid, pass);
+
+  pinMode(LED_BUILTIN, OUTPUT);
+
+
+  for (int i = 0; i < 9; i++)
+  {
+    pinMode(column[i], OUTPUT);  //setting rows to ouput
+  }
+}
+
+void loop()
+{
+  Blynk.run();
+  //digitalWrite(LED_BUILTIN, HIGH);
+  /*
+    //on
+    digitalWrite(column[0], 1);
+    digitalWrite(column[1], 1);
+    digitalWrite(column[2], 1);
+    digitalWrite(column[3], 1);
+    digitalWrite(column[4], 1);
+  */
+  /*
+    //off
+    digitalWrite(column[0], 0);
+    digitalWrite(column[1], 0);
+    digitalWrite(column[2], 0);
+    digitalWrite(column[3], 0);
+    digitalWrite(column[4], 0);
+  */
+  /*
+    //on 1-5
+    Serial.println("on 1-5 : ");
+    for (int i = 0; i < 5; i++)
+    {
+      Serial.print(i);
+      digitalWrite(column[i], 1);
+      delay(t1);
+    }
+    //off 1-5
+    Serial.println("off 1-5 : ");
+    for (int i = 0; i < 5; i++)
+    {
+      Serial.print(i);
+      digitalWrite(column[i], 0);
+      delay(t1);
+    }
+    //on 5-1
+    Serial.println("on 5-1 : ");
+    for (int i = 4; i != -1; i--)
+    {
+      Serial.print(i);
+      digitalWrite(column[i], 1);
+      delay(t1);
+    }
+    //off 5-1
+    Serial.println("off 5-1 : ");
+    for (int i = 4; i != -1; i--)
+    {
+      Serial.print(i);
+      digitalWrite(column[i], 0);
+      delay(t1);
+    }
+  */
+}
+
+//Joystick
+BLYNK_WRITE(V5)
+{
+  int x = param[0].asInt();
+  int y = param[1].asInt();
+
+  Serial.print("X : ");
+  Serial.println(x);
+  Serial.print("Y : ");
+  Serial.println(y);
+
+  //off 1-9
+  for (int i = 0; i < 9; i++)
+  {
+    digitalWrite(column[i], 0);
+  }
+
+  switch (x) {
+    case 0:
+      break;
+    case 1:
+      digitalWrite(column[0], 1);
+      break;
+    case 2:
+      for (int i = 0; i < 2; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 3:
+      for (int i = 0; i < 3; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 4:
+      for (int i = 0; i < 4; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 5:
+      for (int i = 0; i < 5; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 6:
+      for (int i = 0; i < 6; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 7:
+      for (int i = 0; i < 7; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 8:
+      for (int i = 0; i < 8; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 9:
+      for (int i = 0; i < 9; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+  }
+}
+
+//Slider
+BLYNK_WRITE(V0)
+{
+  int x = param[0].asInt();
+
+  Serial.print("V0 : ");
+  Serial.println(x);
+
+  //off 1-9
+  for (int i = 0; i < 9; i++)
+  {
+    digitalWrite(column[i], 0);
+  }
+
+  switch (x) {
+    case 0:
+      break;
+    case 1:
+      digitalWrite(column[0], 1);
+      break;
+    case 2:
+      for (int i = 0; i < 2; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 3:
+      for (int i = 0; i < 3; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 4:
+      for (int i = 0; i < 4; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 5:
+      for (int i = 0; i < 5; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 6:
+      for (int i = 0; i < 6; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 7:
+      for (int i = 0; i < 7; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 8:
+      for (int i = 0; i < 8; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+    case 9:
+      for (int i = 0; i < 9; i++)
+      {
+        digitalWrite(column[i], 1);
+      }
+      break;
+  }
+}
+
+//On 1-9
+BLYNK_WRITE(V1)
+{
+  int x = param[0].asInt();
+
+  if (x == 1)
+  {
+    for (int i = 0; i < 2; i++)
+    {
+      //on 1-9
+      for (int i = 0; i < 9; i++)
+      {
+        digitalWrite(column[i], 1);
+        delay(t1);
+      }
+      //off 1-9
+      for (int i = 0; i < 9; i++)
+      {
+        digitalWrite(column[i], 0);
+        delay(t1);
+      }
+    }
+  }
+  else
+  {
+    for (int i = 0; i < 9; i++)
+    {
+      digitalWrite(column[i], 0);
+      //delay(t1);
+    }
+  }
+}
+
+//On 9-1
+BLYNK_WRITE(V2)
+{
+  int x = param[0].asInt();
+
+  if (x == 1)
+  {
+    for (int i = 0; i < 2; i++)
+    {
+      //on 5-1
+      for (int i = 8; i != -1; i--)
+      {
+        digitalWrite(column[i], 1);
+        delay(t1);
+      }
+      //off 5-1
+      for (int i = 8; i != -1; i--)
+      {
+        digitalWrite(column[i], 0);
+        delay(t1);
+      }
+    }
+  }
+  else
+  {
+    for (int i = 0; i < 9; i++)
+    {
+      digitalWrite(column[i], 0);
+      //delay(t1);
+    }
+  }
+}
+
+//On All
+BLYNK_WRITE(V3)
+{
+  int x = param[0].asInt();
+
+  //on
+  for (int i = 0; i < 9; i++)
+  {
+    digitalWrite(column[i], 1);
+    //delay(t1);
+  }
+}
+
+//Off All
+BLYNK_WRITE(V4)
+{
+  int x = param[0].asInt();
+
+  //off
+  for (int i = 0; i < 9; i++)
+  {
+    digitalWrite(column[i], 0);
+    //delay(t1);
+  }
+}
